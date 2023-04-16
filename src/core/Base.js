@@ -10,8 +10,10 @@ function BaseApp({title,children}) {
         <a class="navbar-brand" href="#">{title}</a>
         {/* <form class="container-fluid justify-content-start"> */}
         <div className="navbutton">
-            <button class="btn btn-sm btn-outline-secondary" type="button" onClick={()=>history.push("/Adduser")}>Add User</button>
-            <button class="btn btn-sm btn-outline-secondary" type="button" onClick={()=>history.push("/")}>Dashboard</button>
+            <button class="btn btn-sm btn-outline-secondary" type="button" onClick={()=>history.push("/Adduser")}>Add Student</button>
+            <button class="btn btn-sm btn-outline-secondary" type="button" onClick={()=>history.push("/Addteacher")}>Add Teacher</button>
+            <button class="btn btn-sm btn-outline-secondary" type="button" onClick={()=>history.push("/userDetails")}>Student Dashboard</button>
+            <button class="btn btn-sm btn-outline-secondary" type="button" onClick={()=>history.push("/teacherDetails")}>Teacher Dashboard</button>
         </div>
                  {/* </form> */}
 

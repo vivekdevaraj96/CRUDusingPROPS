@@ -1,8 +1,9 @@
-import React,{useState} from 'react'
-import BaseApp from '../core/Base'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import BaseApp from '../core/Base'
 
-function Adduser({user,setUser}) {
+
+const Addteacher = ({teacher, setTeacher}) => {
     const history=useHistory()
 
     const [id,setId]=useState("")
@@ -12,9 +13,9 @@ function Adduser({user,setUser}) {
     const [batch,setBatch]=useState("")
     const [experience,setExperience]=useState("")
 
-    const addNewUser=()=>{
+    const addNewTeacher=()=>{
         
-        const newUser={
+        const newTeacher={
             id,
             fname,
             lname,
@@ -22,14 +23,12 @@ function Adduser({user,setUser}) {
             batch,
             experience
         }
-        setUser([...user, newUser])
-        history.push("/userDetails")
+        setTeacher([...teacher, newTeacher])
+        history.push("/teacherDetails")
     }
-
   return (
-   
-        <div>
-    <BaseApp title="Add Student">
+    <div>
+    <BaseApp title="Add Teacher">
         
             <input placeholder='id' value={id} onChange={(event)=>setId(event.target.value)}/>
             <input placeholder='First name' value={fname} onChange={(event)=>setFname(event.target.value)}/>
@@ -37,16 +36,14 @@ function Adduser({user,setUser}) {
             <input placeholder='Email' value={email} onChange={(event)=>setEmail(event.target.value)}/>
             <input placeholder='batch' value={batch} onChange={(event)=>setBatch(event.target.value)}/>
             <input placeholder='Experience' value={experience} onChange={(event)=>setExperience(event.target.value)}/>
-            <button onClick={()=>addNewUser()}>Add user</button>
+            <button onClick={()=>addNewTeacher()}>Add user</button>
 
         
     
     </BaseApp>
         
     </div>
- 
-    
   )
 }
 
-export default Adduser
+export default Addteacher

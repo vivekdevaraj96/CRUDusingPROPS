@@ -41,7 +41,7 @@ setExperience(selectedUser.experience)
     console.log(editIndex)
     user[editIndex]=editedData;
     setUser([...user]);
-    history.push("/")
+    history.push("/userDetails")
   }
 
   return (
