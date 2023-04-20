@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import './App.css';
 import { Redirect, Route,Switch } from 'react-router-dom';
@@ -6,22 +6,24 @@ import Usercomponent from './components/usercomponent';
 import Edituser from './components/Edituser';
 import Adduser from './components/Adduser';
 import Nopage from './components/nopage';
-import { data } from './Data/Data';
-import { data1 } from './Data/Data1';
 import Userdetails from './components/Userdetails';
 import Mainpage from './components/Mainpage';
 import Teacherdetails from './components/Teacherdetails';
 import Addteacher from './components/Addteacher';
 import Editteacher from './components/Editteacher';
 import Teacher from './components/Teacher';
+import { AppState } from './context/AppProvider';
+
 
 
 
 
 
 function App() {
-  const [user,setUser]=useState(data)
-  const [teacher,setTeacher]=useState(data1)
+ const {user,setUser,teacher,setTeacher}=AppState();
+
+ console.log(user)
+ console.log(teacher)
  
   return (
     
@@ -33,40 +35,40 @@ function App() {
       </Route>
 
       <Route path="/userDetails">
-          <Usercomponent user={user} setUser={setUser}/>
+          <Usercomponent/>
       </Route>
 
       <Route path="/teacherDetails">
-          <Teacherdetails teacher={teacher} setTeacher={setTeacher}/>
+          <Teacherdetails/>
       </Route>
 
       <Route path="/Adduser">
-          <Adduser user={user} setUser={setUser}/>
+          <Adduser/>
       </Route>     
 
       <Route path="/Addteacher">
-          <Addteacher teacher={teacher} setTeacher={setTeacher}/>
+          <Addteacher/>
       </Route>    
 
       <Route path="/Edituser/:id">
-        <Edituser user={user} setUser={setUser}/>
+        <Edituser/>
       </Route>
 
       <Route path="/Editteacher/:id">
-        <Editteacher teacher={teacher} setTeacher={setTeacher}/>
+        <Editteacher/>
       </Route>
 
       <Route path="/User/:id">
-        <Userdetails user={user}/>
+        <Userdetails/>
       </Route>
 
       <Route path="/Teacher/:id">
-        <Teacher teacher={teacher}/>
+        <Teacher/>
       </Route>
 
-      <Route path="/students">
+      {/* <Route path="/students">
         <Redirect path="/"/>
-      </Route>
+      </Route> */}
 
       <Route path="**">
           <Nopage/>
