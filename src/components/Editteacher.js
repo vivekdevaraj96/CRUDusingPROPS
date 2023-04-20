@@ -39,6 +39,7 @@ const Editteacher = () => {
         batch,
         email,
         experience
+        
       }
 
       try{
