@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import BaseApp from '../core/Base';
+import { AppState } from '../context/AppProvider';
 
-const Edituser=({user,setUser})=>{  
+const Edituser=()=>{  
+  const {user,setUser}=AppState();
 
   const [ids,setId]=useState("");
   const [fname,setFname]=useState("");
@@ -27,17 +29,37 @@ setBatch(selectedUser.batch)
 setExperience(selectedUser.experience)    
   },[]);
 
-  const updateUser=()=>{
+  const updateUser=async()=>{
     const editIndex=user.findIndex((per)=>per.id === id);
 
-    const editedData={
-      id:ids,
-      fname,
-      lname,
-      batch,
-      email,
-      experience
+      const editedData={
+        id:ids,
+        fname,
+        lname,
+        batch,
+        email,
+        experience
+      }
+
+    try {
+
+      
+
+        const response=await fetch(`https://6411f5f1f9fe8122ae18e9d8.mockapi.io/student/${ids}`,{
+          method:"PUT",
+          body:JSON.stringify(editedData),
+          headers:{
+            "content-type":"application/json"
+          }
+        })
+        const data=await response.json();
+        
+    }catch(error){
+      console.log(error)
     }
+
+
+   
     console.log(editIndex)
     user[editIndex]=editedData;
     setUser([...user]);

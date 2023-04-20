@@ -1,17 +1,27 @@
 import React from 'react'
 import BaseApp from '../core/Base';
-
 import { useHistory } from 'react-router-dom';
+import { AppState } from '../context/AppProvider';
 
 
-function Usercomponent({user, setUser}) {
+function Usercomponent() {
+  const {user,setUser}=AppState();
   const history=useHistory();
   
 
-  const deleteUser=(idx)=>{
+  const deleteUser=async(idx)=>{
+    try{
+      const response= await fetch(`https://6411f5f1f9fe8122ae18e9d8.mockapi.io/student/${idx}`,{
+        method:"Delete"
+      })
+      const data= await response.json();
+
+      const alterList=user.filter((per)=>per.id !== idx)
+      setUser(alterList);
+    }catch(error){
+      console.log(error)
+    }
     
-    const alterList=user.filter((per)=>per.id !== idx)
-    setUser(alterList);
   }
   return (
     <div><BaseApp title="Student Details">

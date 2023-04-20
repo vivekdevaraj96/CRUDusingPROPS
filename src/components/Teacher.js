@@ -1,8 +1,10 @@
 import React from 'react'
 import BaseApp from '../core/Base';
 import { useParams } from 'react-router-dom';
+import { AppState } from '../context/AppProvider';
 
-const Teacher = ({teacher}) => {
+const Teacher = () => {
+  const {teacher}=AppState();
     const {id}=useParams()
     const person=teacher[id];
 

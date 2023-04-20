@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import BaseApp from '../core/Base';
 import { useHistory, useParams } from 'react-router-dom';
+import { AppState } from '../context/AppProvider';
 
-const Editteacher = ({teacher,setTeacher}) => {  
+const Editteacher = () => {  
+  const {teacher,setTeacher}=AppState();
 
     const [ids,setId]=useState("");
     const [fname,setFname]=useState("");
@@ -27,7 +29,7 @@ const Editteacher = ({teacher,setTeacher}) => {
   setExperience(selectedTeacher.experience)    
     },[]);
   
-    const updateTeacher=()=>{
+    const updateTeacher=async()=>{
       const editIndex=teacher.findIndex((per)=>per.id === id);
   
       const editedData={
@@ -38,10 +40,27 @@ const Editteacher = ({teacher,setTeacher}) => {
         email,
         experience
       }
-      console.log(editIndex)
+
+      try{
+        const response= await fetch(`https://6411f5f1f9fe8122ae18e9d8.mockapi.io/Teacher/${ids}`,{
+          method:"PUT",
+          body:JSON.stringify(editedData),
+          headers:{
+            "content-type":"application/json"
+          }       
+
+        })
+        const data1=await response.json()
+
+        console.log(data1)
       teacher[editIndex]=editedData;
       setTeacher([...teacher]);
       history.push("/teacherDetails")
+      }catch(error){
+
+      }
+
+      
     }
   
     return (

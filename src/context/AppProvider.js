@@ -1,31 +1,57 @@
-import React, {useEffect, useState } from "react";
+import React, {createContext, useContext, useEffect, useState } from 'react'
+import { data1 } from '../Data/Data1'
 
 
 
 
-function AppProvider({children}) {
+const AppContext=createContext()
 
-    const [state,setState]=useState();
+const AppProvider = ({children}) => {
+    const [user, setUser]=useState([])
+    const [teacher,setTeacher]=useState(data1)
 
     useEffect(()=>{
-        const getuserDetails=async()=>{
-            try{
-                const response=await fetch("https://6411f5f1f9fe8122ae18e9d8.mockapi.io/user",{method:"GET"});
-                const data=await response.json();
-                console.log(data);
-
-                setState(data)
-            }catch(error){
-                console.log(error)
-            }
+      const getUserDetails=async()=>{
+        try{
+          const response=await fetch("https://6411f5f1f9fe8122ae18e9d8.mockapi.io/student",{
+            method:"GET"            
+          });
+          const data=await response.json()
+          setUser(data)
+        }catch(error){
+          console.log("unable to fetch Data")
         }
+      }
 
-        getuserDetails();
+      getUserDetails();
+
+      const getTeacherDetails=async()=>{
+        try{
+          const response= await fetch("https://6411f5f1f9fe8122ae18e9d8.mockapi.io/Teacher",{
+            method:"GET"
+          });
+          const data1=await response.json()
+          setTeacher(data1)
+        }catch(error){
+          console.log("unable to fetch Data1")
+        }
+      }
+
+      getTeacherDetails();
+
+
     },[])
 
+    
   return (
-    <div state={state}>{children}</div>
+    <AppContext.Provider value={{user, setUser,teacher,setTeacher}}>
+    {children}
+    </AppContext.Provider>
   )
+}
+
+export const AppState=()=>{
+    return useContext(AppContext)
 }
 
 export default AppProvider
