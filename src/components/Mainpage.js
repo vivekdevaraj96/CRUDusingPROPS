@@ -10,7 +10,7 @@ const Mainpage = () => {
         <Form.Select aria-label="Default select example">
     <option>Open this select menu</option>
     <option value="1" onClick={()=>history.push("/userDetails")}>Student Details</option>
-    <option value="2">Teacher Details</option>   
+    <option value="2" onClick={()=>history.push("/teacherDetails")}>Teacher Details</option>   
   </Form.Select></div>
   )
 }
