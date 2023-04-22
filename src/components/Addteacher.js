@@ -2,29 +2,44 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import BaseApp from '../core/Base'
 import { AppState } from '../context/AppProvider';
+import { TextField } from '@mui/material';
+import * as yup from 'yup'
+import { useFormik } from 'formik';
+
+
+const userSchemaValidation=yup.object({
+  id:yup.string().required("Please specify your ID"),
+  fname:yup.string().required("Please enter your first name"),
+  lname:yup.string().required("Please enter your last name"),
+  email:yup.string().email().required("Enter a valid Email ID"),
+  batch:yup.string().min(3,"Enter proper Batch ID").required("Enter Batch ID"),
+  experience:yup.string().required("Enter experience if there is no experience, Enter '-'")
+})
 
 
 const Addteacher = () => {
   const {teacher,setTeacher}=AppState();
     const history=useHistory()
 
-    const [id,setId]=useState("")
-    const [fname,setFname]=useState("")
-    const [lname,setLname]=useState("")
-    const [email,setEmail]=useState("")
-    const [batch,setBatch]=useState("")
-    const [experience,setExperience]=useState("")
+    const {values,handleChange, handleSubmit, handleBlur, errors, touched}=useFormik({
+      initialValues:{
+        id:"",
+        fname:"",
+        lname:"",
+        email:"",
+        batch:"",
+        experience:""
+      },
+      validationSchema:userSchemaValidation,
+      onSubmit:(newTeacher)=>{
+        addNewTeacher(newTeacher)
+      }
+    })
 
-    const addNewTeacher=async()=>{
-        
-        const newTeacher={
-            id,
-            fname,
-            lname,
-            email,
-            batch,
-            experience
-        }
+
+
+    const addNewTeacher=async(newTeacher)=>{
+
 
         try{
           const response=await fetch("https://6411f5f1f9fe8122ae18e9d8.mockapi.io/Teacher",{
@@ -49,13 +64,36 @@ const Addteacher = () => {
     <div>
     <BaseApp title="Add Teacher">
         
-            <input placeholder='id' value={id} onChange={(event)=>setId(event.target.value)}/>
-            <input placeholder='First name' value={fname} onChange={(event)=>setFname(event.target.value)}/>
-            <input placeholder='Last name' value={lname} onChange={(event)=>setLname(event.target.value)}/>
-            <input placeholder='Email' value={email} onChange={(event)=>setEmail(event.target.value)}/>
-            <input placeholder='batch' value={batch} onChange={(event)=>setBatch(event.target.value)}/>
-            <input placeholder='Experience' value={experience} onChange={(event)=>setExperience(event.target.value)}/>
-            <button onClick={()=>addNewTeacher()}>Add Teacher</button>
+            
+
+    <form className='Textareas' onSubmit={handleSubmit}>
+            <TextField fullWidth id="outlined-basic" name="id" label="id" onBlur={handleBlur}
+                variant="outlined" value={values.id} onChange={handleChange}/>
+                {touched.id && errors.id ? <p style={{color:"crimson"}}>{errors.id}</p>: ""}
+
+            <TextField fullWidth id="outlined-basic" name="fname" label="First name" onBlur={handleBlur}
+                variant="outlined" value={values.fname} onChange={handleChange}/>
+                {touched.fname && errors.fname ? <p style={{color:"crimson"}}>{errors.fname}</p>: ""}
+
+            <TextField fullWidth id="outlined-basic" name="lname" label="Last name" onBlur={handleBlur}
+                variant="outlined" value={values.lname} onChange={handleChange}/>
+                {touched.lname && errors.lname ? <p style={{color:"crimson"}}>{errors.lname}</p>: ""}
+
+            <TextField fullWidth id="outlined-basic" name="email" label="Email" onBlur={handleBlur}
+                variant="outlined" value={values.email} onChange={handleChange}/>
+                {touched.email && errors.email ? <p style={{color:"crimson"}}>{errors.email}</p>: ""}
+
+            <TextField fullWidth id="outlined-basic" name="batch" label="batch" onBlur={handleBlur}
+                variant="outlined" value={values.batch} onChange={handleChange}/>
+                {touched.batch && errors.batch ? <p style={{color:"crimson"}}>{errors.batch}</p>: ""}
+
+            <TextField fullWidth id="outlined-basic" name="experience" label="Experience" onBlur={handleBlur}
+                variant="outlined" value={values.experience} onChange={handleChange}/>
+                {touched.experience && errors.experience ? <p style={{color:"crimson"}}>{errors.experience}</p>: ""}
+        
+
+             <button onClick={()=>addNewTeacher()}>Add Teacher</button>
+            </form>
 
         
     
